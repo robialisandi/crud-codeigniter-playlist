@@ -105,7 +105,7 @@ if(!(string)$user_id){
              						  <td><?php echo $book->book_category;?></td>
              						  <td>
                                     <button class="btn btn-mini btn-primary" data-toggle="modal" onclick="edit_book(<?php echo $book->book_id;?>)"><i class="icon-edit icon-white"></i> Edit</button>
-             							  <button class="btn btn-mini btn-danger" data-toggle="modal" onclick="delete_book(<?php echo $book->book_id;?>)"><i class="icon-trash icon-white"></i> Delete</button>
+             							  <button class="btn btn-mini btn-danger" data-toggle="modal" onclick="confirm(<?php echo $book->book_id;?>)"><i class="icon-trash icon-white"></i> Delete</button>
              						  </td>
              				     </tr>
              				<?php }?>
@@ -158,6 +158,24 @@ if(!(string)$user_id){
                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
               </div>
            </div>
+
+           <div class="modal fade" id="modal_delete">
+             <div class="modal-header">
+                <h3>Delete Books</h3>
+             </div>
+             <div class="modal-body">
+                <form action="#" id="form" class="form-horizontal">
+                   <fieldset>
+                      <p>Anda yakin ingin menghapus data buku ini ?</p>
+                      <input type="hidden" value="" id="book_id" name="book_id"/>
+                   </fieldset>
+                </form>
+             </div>
+             <div class="modal-footer">
+                <button type="button" id="btnSave" onclick="delete_book()" class="btn btn-danger">Hapus</button>
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+             </div>
+          </div>
 
          </div>
       </div>
@@ -214,7 +232,7 @@ if(!(string)$user_id){
              $('[name="book_category"]').val(data.book_category);
 
              $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-             //$('.modal-title').text('Edit Book'); // Set title to Bootstrap modal title
+             $('.modal-title').text('Edit Book'); // Set title to Bootstrap modal title
           },
           error: function (jqXHR, textStatus, errorThrown)
           {
@@ -254,25 +272,31 @@ if(!(string)$user_id){
       });
     }
 
-    function delete_book(id)
+
+    function confirm(id){
+      $('#modal_delete').modal('show');
+      $('#modal_delete #book_id').val(id);
+    }
+
+    function delete_book()
     {
-      if(confirm('Are you sure delete this data?'))
-      {
-          // ajax delete data from database
-          $.ajax({
-             url : "<?php echo site_url('index.php/book/book_delete')?>/"+id,
-             type: "POST",
-             dataType: "JSON",
-             success: function(data)
-             {
-                location.reload();
-             },
-             error: function (jqXHR, textStatus, errorThrown)
-             {
-                alert('Error deleting data');
-             }
-          });
-      }
+      debugger;
+       var id = $('#modal_delete #book_id').val();
+       // ajax delete data from database
+       $.ajax({
+          url : "<?php echo site_url('index.php/book/book_delete')?>/"+id,
+          type: "POST",
+          dataType: "JSON",
+          success: function(data)
+          {
+             location.reload();
+          },
+          error: function (jqXHR, textStatus, errorThrown)
+          {
+             alert('Error deleting data');
+          }
+       });
+
     }
 
     </script>
