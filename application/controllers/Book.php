@@ -48,6 +48,7 @@ class Book extends CI_Controller {
 		$data["links"] = $this->pagination->create_links();
 		//echo "<pre>";
 		//die(print_r($data, TRUE));
+		//$this->load->view('components/m_confirmation');
 		$this->load->view('book_view', $data);
 	}
 
