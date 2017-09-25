@@ -64,7 +64,7 @@ class User_model extends CI_Model
 
    public function sendEmail($to_email, $name)
    {
-      $from_email = 'robbiealisandi@gmail.com'; //change this to yours
+      $from_email = 'example@example.com'; //change this to yours
       $subject = 'Verify Your Email Address';
       //$message = 'Dear User,<br /><br />Please click on the below activation link to verify your email address.<br /><br /> http://localhost:90/codeigniter/user/verify/' . md5($to_email) . '<br /><br /><br />Thanks<br />Mydomain Team';
 
@@ -211,7 +211,7 @@ class User_model extends CI_Model
          'smtp_host' => 'ssl://smtp.gmail.com',
          'smtp_port' => 465,
          'smtp_user' => $from_email,
-         'smtp_pass' => 'heloword.0987#',
+         'smtp_pass' => '********s',
          'mailtype'  => 'html',
          'charset'   => 'iso-8859-1'
          );
