@@ -61,53 +61,97 @@ if(!(string)$user_id){
     </div>
 
     <div class="container">
+      <div class="row-fluid">
+         <div class="span12">
+            <h1>Dashboard</h1>
+            <p>List Book.</p>
+            <div class="row-fluid">
+               <div class="span4">
+                  <p>
+                     <button class="btn btn-success" onclick="add_book()"><i class="icon-plus icon-white"></i> Add Book</button>
+                  </p>
+               </div>
+            </div>
 
-      <h1>Dashboard</h1>
-      <p>List Book.</p>
+            <div class="row-fluid">
+               <div class="span12">
+                  <table class="table table-striped table-bordered table-condensed">
+                     <thead>
+                        <tr>
+                          <th>Book ID</th>
+                          <th>Book ISBN</th>
+                          <th>Book Title</th>
+                          <th>Book Author</th>
+                          <th>Book Category</th>
+                          <th style="width:125px;">Action</p></th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <?php foreach($books as $book){?>
+             				     <tr>
+                                 <td><?php echo $book->book_id;?></td>
+             				        <td><?php echo $book->book_isbn;?></td>
+                                 <td><?php echo $book->book_title;?></td>
+                                 <td><?php echo $book->book_author;?></td>
+             						  <td><?php echo $book->book_category;?></td>
+             						  <td>
+                                    <button class="btn btn-mini btn-primary" data-toggle="modal" onclick="edit_book(<?php echo $book->book_id;?>)"><i class="icon-edit icon-white"></i> Edit</button>
+             							  <button class="btn btn-mini btn-danger" data-toggle="modal" onclick="delete_book(<?php echo $book->book_id;?>)"><i class="icon-trash icon-white"></i> Delete</button>
+             						  </td>
+             				     </tr>
+             				<?php }?>
+                     </tbody>
+                  </table>
+                  <?php echo $links; ?>
+               </div>
+            </div>
 
+            <!-- modal -->
+            <div class="modal fade" id="modal_form">
+              <div class="modal-header">
+                 <h3>Add Books</h3>
+              </div>
+              <div class="modal-body">
+                 <form action="#" id="form" class="form-horizontal">
+                    <fieldset>
+                       <input type="hidden" value="" name="book_id"/>
+                       <div class="form-body">
+                          <div class="control-group">
+                             <label class="control-label col-md-3">Book ISBN :</label>
+                             <div class="controls col-md-9">
+                                <input name="book_isbn" placeholder="Book ISBN" class="form-control input-small" type="text">
+                             </div>
+                          </div>
+                          <div class="control-group">
+                             <label class="control-label col-md-3">Book Title :</label>
+                             <div class="controls col-md-9">
+                                <input name="book_title" placeholder="Book_title" class="form-control span3" type="text">
+                             </div>
+                          </div>
+                          <div class="control-group">
+                             <label class="control-label col-md-3">Book Author :</label>
+                             <div class="controls col-md-9">
+                                <input name="book_author" placeholder="Book Author" class="form-control span3" type="text">
+                             </div>
+                          </div>
+                          <div class="control-group">
+                             <label class="control-label col-md-3">Book Category :</label>
+                             <div class="controls col-md-9">
+                                <input name="book_category" placeholder="Book Category" class="form-control span3" type="text">
+                             </div>
+                          </div>
+                       </div>
+                    </fieldset>
+                 </form>
+              </div>
+              <div class="modal-footer">
+                 <button type="button" id="btnSave" onclick="save()" class="btn btn-primary">Save</button>
+                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+              </div>
+           </div>
 
-      <table class="table table-striped table-bordered table-condensed">
-         <thead>
-            <tr>
-              <th>Book ID</th>
-              <th>Book ISBN</th>
-              <th>Book Title</th>
-              <th>Book Author</th>
-              <th>Book Category</th>
-              <th style="width:125px;">Action</p></th>
-            </tr>
-         </thead>
-         <tbody>
-            <?php foreach($books as $book){?>
- 				     <tr>
-                     <td><?php echo $book->book_id;?></td>
- 				        <td><?php echo $book->book_isbn;?></td>
-                     <td><?php echo $book->book_title;?></td>
-                     <td><?php echo $book->book_author;?></td>
- 						  <td><?php echo $book->book_category;?></td>
- 						  <td>
-                        <button class="btn btn-mini btn-primary" data-toggle="modal" onclick="edit_book(<?php echo $book->book_id;?>)"><i class="icon-edit icon-white"></i> Edit</button>
- 							  <button class="btn btn-mini btn-danger" data-toggle="modal" onclick="delete_book(<?php echo $book->book_id;?>)"><i class="icon-trash icon-white"></i> Delete</button>
- 						  </td>
- 				     </tr>
- 				<?php }?>
-         </tbody>
-      </table>
-      <?php echo $links; ?>
-      <!-- modal -->
-      <div class="modal fade" id="modal_form">
-        <div class="modal-header">
-           <a class="close" data-dismiss="modal">×</a>
-           <h3>Modal header</h3>
-        </div>
-        <div class="modal-body">
-           <p>One fine body…</p>
-        </div>
-        <div class="modal-footer">
-           <a href="#" class="btn">Close</a>
-           <a href="#" class="btn btn-primary">Save changes</a>
-        </div>
-     </div>
+         </div>
+      </div>
     </div> <!-- /container -->
 
     <!-- Le javascript
@@ -129,8 +173,8 @@ if(!(string)$user_id){
 
     <script type="text/javascript">
     $(window).load(function() {
-    $('#modal').modal('show');
-});
+      $('#modal').modal('show');
+    });
 
     var save_method; //for save method string
     var table;
@@ -139,8 +183,7 @@ if(!(string)$user_id){
     {
       save_method = 'add';
       $('#form')[0].reset(); // reset form on modals
-      $('#modal').modal('show'); // show bootstrap modal
-      //$('.modal-title').text('Add Person'); // Set Title to Bootstrap modal title
+      $('#modal_form').modal('show'); // show bootstrap modal
     }
 
     function edit_book(id)
