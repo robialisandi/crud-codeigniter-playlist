@@ -55,6 +55,15 @@ if(!(string)$user_id){
               <li><a href="./about">About</a></li>
               <li><a href="./contact">Contact</a></li>
             </ul>
+
+            <ul class="nav pull-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $user_id; ?> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="<?php echo base_url('user/user_logout');?>">Keluar</a></li>
+                </ul>
+              </li>
+            </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
